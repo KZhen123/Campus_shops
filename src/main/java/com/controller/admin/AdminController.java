@@ -57,7 +57,6 @@ public class AdminController {
     @ResponseBody
     @PostMapping("/admin/login")
     public ResultVo adminlogin(@RequestBody Login login, HttpSession session){
-        System.out.println("测试是否进入！！！");
         String account=login.getUsername();
         String password=login.getPassword();
         String vercode=login.getVercode();

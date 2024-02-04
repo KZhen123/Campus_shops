@@ -23,7 +23,7 @@ function lookallproduct(stuatus) {
             }, cols: [[
                 {field: 'qid', title: 'ID',width:80, align:'center'}
                 , {field: 'commname', title: '名称', width: 300, align:'center'}
-                , {field: 'category', title: '类别', width: 100, align:'center'}
+                , {field: 'categoryName', title: '类别', width: 100, align:'center'}
                 , {field: 'commdesc', title: '描述', width: 700, align:'center'}
                 , {field: 'updatetime', title: '时间', width: 160,sort: true, align:'center'}
                 , {fixed: 'right', title: '操作', toolbar: '#barDemo', width:200, align:'center'}

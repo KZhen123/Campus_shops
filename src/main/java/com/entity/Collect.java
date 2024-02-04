@@ -64,8 +64,4 @@ public class Collect implements Serializable {
      * 收藏用户id
      */
     private String couserid;
-    /**
-     * 收藏操作：收藏or取消收藏
-     */
-    private Integer colloperate;
 }

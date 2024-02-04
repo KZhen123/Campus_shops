@@ -73,15 +73,6 @@ public class IndexController {
     }
 
     /**
-     * 用户更换手机号
-     * */
-    @RequiresPermissions("user:userinfo")
-    @GetMapping("/user/phone")
-    public String userphone(){
-        return "/user/updatephone";
-    }
-
-    /**
      * 用户商品列表
      * */
     @GetMapping("/user/product")
@@ -145,7 +136,15 @@ public class IndexController {
      * */
     @GetMapping("/user/sold")
     public String sold(){
-        return "/user/sold/soldrecord";
+        return "/user/order/soldrecord";
+    }
+
+    /**
+     * 用户购买记录
+     * */
+    @GetMapping("/user/buy")
+    public String buy(){
+        return "/user/order/buyRecord";
     }
 
     /**

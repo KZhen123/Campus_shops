@@ -21,8 +21,8 @@
     </select>
     <!-- 添加用户信息 -->
     <insert id="userReg" parameterType="com.entity.UserInfo">
-        insert into user_info (userid,username,password,mobilephone,email,uimage,status,sign)
-        values (#{userid},#{username},#{password},#{mobilephone},#{email},#{uimage},#{status},#{sign})
+        insert into user_info (userid,username,password,mobilephone,email,uimage,sign)
+        values (#{userid},#{username},#{password},#{mobilephone},#{email},#{uimage},#{sign})
     </insert>
     <!-- 修改用户信息 -->
     <update id="UpdateUserInfo" parameterType="com.entity.UserInfo">
@@ -37,8 +37,7 @@
             <if test="school != null">school=#{school},</if>
             <if test="faculty != null">faculty=#{faculty},</if>
             <if test="startime != null">startime=#{startime},</if>
-            <if test="userstatus != null">userstatus=#{userstatus},</if>
-            <if test="status != null">status=#{status}</if>
+            <if test="userstatus != null">userstatus=#{userstatus}</if>
         </set>
         where userid=#{userid}
     </update>

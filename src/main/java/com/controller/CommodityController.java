@@ -42,8 +42,6 @@ public class CommodityController {
     @Autowired
     private UserInfoService userInfoService;
     @Autowired
-    private SoldrecordService soldrecordService;
-    @Autowired
     private CollectService collectService;
     @Autowired
     private NoticesService noticesService;
@@ -132,11 +130,11 @@ public class CommodityController {
     }
 
     /**
-     * 上传视频和主图
+     * 上传主图
      */
-    @PostMapping("/relgoods/video")
+    @PostMapping("/relgoods/pic")
     @ResponseBody
-    public JSONObject relgoodsvideo(@RequestParam(value = "file", required = false) MultipartFile file) throws IOException {
+    public JSONObject relgoodsPic(@RequestParam(value = "file", required = false) MultipartFile file) throws IOException {
         JSONObject res = new JSONObject();
         JSONObject resUrl = new JSONObject();
         String filename = UUID.randomUUID().toString().replaceAll("-", "");
@@ -364,18 +362,6 @@ public class CommodityController {
     public ResultVo ChangeCommstatus(@PathVariable("commid") String commid, @PathVariable("commstatus") Integer commstatus, HttpSession session) {
         Integer i = commodityService.ChangeCommstatus(commid, commstatus);
         if (i == 1){
-            /**如果商品已售出*/
-            if (commstatus == 4){
-                String userid = (String) session.getAttribute("userid");
-                /**查询售出商品的信息*/
-                Commodity commodity = commodityService.LookCommodity(new Commodity().setCommid(commid));
-                Soldrecord soldrecord = new Soldrecord();
-                /**将商品信息添加到售出记录中*/
-                soldrecord.setId(KeyUtil.genUniqueKey()).setCommid(commid).setCommname(commodity.getCommname()).setCommdesc(commodity.getCommdesc())
-                .setThinkmoney(commodity.getThinkmoney()).setUserid(userid);
-                /**添加售出记录*/
-                soldrecordService.insertSold(soldrecord);
-            }
             return new ResultVo(true,StatusCode.OK,"操作成功");
         }
         return new ResultVo(false,StatusCode.ERROR,"操作失败");

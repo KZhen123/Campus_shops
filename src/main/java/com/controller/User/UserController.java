@@ -43,8 +43,6 @@ public class UserController {
     private LoginService loginService;
     @Autowired
     private UserInfoService userInfoService;
-    /**手机号和更换手机号验证码map集合*/
-    private static Map<String, String> phonecodemap = new HashMap<>();
     /**
      * 修改密码
      * 1.前端传入旧密码（oldpwd）、新密码（newpwd）
@@ -170,94 +168,6 @@ public class UserController {
         }
         return new ResultVo(false, StatusCode.ERROR, "修改失败");
     }
-
-    /**更换手机号时发送短信验证码
-     * 1.判断是否为更换手机号类型验证码
-     * 2.判断手机号格式是否正确
-     * 3.查询账号是否存在
-     * 4.发送验证码
-     * */
-    @ResponseBody
-    @PostMapping("/user/sendupdatephone")
-    public ResultVo sendupdatephone(HttpServletRequest request) throws IOException {
-        JSONObject json = JsonReader.receivePost(request);
-        final String mobilephone = json.getString("mobilephone");
-        Integer type = json.getInt("type");
-        Login login = new Login();
-        if(type!=2){
-            return new ResultVo(false,StatusCode.ACCESSERROR,"违规操作");
-        }
-        if (!JustPhone.justPhone(mobilephone)) {//判断输入的手机号格式是否正确
-            return new ResultVo(false,StatusCode.ERROR,"请输入正确格式的手机号");
-        }
-        //查询手机号是否存在
-        login.setMobilephone(mobilephone);
-        Login userIsExist = loginService.userLogin(login);
-        if (!StringUtils.isEmpty(userIsExist)){//若手机号已注册过
-            return new ResultVo(false, StatusCode.REPERROR,"手机号已存在");
-        }
-        String code = GetCode.phonecode();
-        Integer result = new SmsUtil().SendMsg(mobilephone, code, type);//发送验证码
-        if(result == 1) {//发送成功
-            phonecodemap.put(mobilephone, code);//放入map集合进行对比
-
-/*
-            final Timer timer = new Timer();
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    phonecodemap2.remove(phoneNum);
-                    timer.cancel();
-                }
-            }, 5 * 60 * 1000);
-*/
-
-            //执行定时任务
-            ScheduledExecutorService executorService = new ScheduledThreadPoolExecutor(1,
-                    new BasicThreadFactory.Builder().namingPattern("example-schedule-pool-%d").daemon(true).build());
-            executorService.scheduleAtFixedRate(new Runnable() {
-                @Override
-                public void run() {
-                    phonecodemap.remove(mobilephone);
-                    ((ScheduledThreadPoolExecutor) executorService).remove(this::run);
-                }
-            },5 * 60 * 1000,5 * 60 * 1000, TimeUnit.HOURS);
-
-
-
-            return new ResultVo(true,StatusCode.SMS,"验证码发送成功");
-        }else if(result == 2){
-            return new ResultVo(false,StatusCode.ERROR,"请输入正确格式的手机号");
-        }
-        return new ResultVo(false,StatusCode.REMOTEERROR,"验证码发送失败");
-    }
-
-    /**
-     * 修改绑定手机号
-     * 1.获取session中userid
-     * 2.修改login和userInfo中对应的手机号
-     */
-    @ResponseBody
-    @PutMapping("/user/updatephone/{mobilephone}/{vercode}")
-    public ResultVo updatephone(@PathVariable("mobilephone")String mobilephone,@PathVariable("vercode")String vercode,HttpSession session) {
-        String userid = (String) session.getAttribute("userid");
-        String rel = phonecodemap.get(mobilephone);
-        if (StringUtils.isEmpty(rel)) {//验证码到期 或者 没发送短信验证码
-            return new ResultVo(false,StatusCode.ERROR,"请重新获取验证码");
-        }
-        if (rel.equalsIgnoreCase(vercode)) {//验证码正确
-            Login login = new Login().setUserid(userid).setMobilephone(mobilephone);
-            UserInfo userInfo = new UserInfo().setUserid(userid).setMobilephone(mobilephone);
-            Integer integer = loginService.updateLogin(login);
-            Integer integer1 = userInfoService.UpdateUserInfo(userInfo);
-            if (integer == 1 && integer1 == 1) {
-                return new ResultVo(true, StatusCode.OK, "更换手机号成功");
-            }
-            return new ResultVo(false, StatusCode.SERVERERROR, "系统错误，更换失败");
-        }
-        return new ResultVo(false,StatusCode.ERROR,"验证码错误");
-    }
-
 
 }
 

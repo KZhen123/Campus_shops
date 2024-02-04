@@ -88,4 +88,9 @@ public class Commodity implements Serializable {
      */
     private String userid;
 
+    /**
+     * 类别名称
+     * */
+    private String categoryName;
+
 }

@@ -61,6 +61,40 @@
     <div th:include="~{index :: myhdservices}"></div>
 </div>
 <main class="ps-main">
+    <!--弹窗-->
+    <div id="add-main" style="display: none;">
+        <form class="layui-form" id="add-form"  action="" lay-filter="order-form">
+            <!-- 隐藏字段，用于携带页面信息 -->
+            <input type="hidden" name="commodityName" th:value="${gddetail.commname}">
+            <input type="hidden" name="commodityId" th:value="${gddetail.commid}">
+            <input type="hidden" name="price" th:value="${gddetail.thinkmoney}">
+            <input type="hidden" name="sellerId" th:value="${gddetail.userid}">
+
+            <div class="layui-form-item center" >
+                <label class="layui-form-label" style="width: 100px" >收件人姓名</label>
+                <div class="layui-input-block">
+                    <input type="text" name="receiveName" required style="width: 240px"  lay-verify="required" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item center" >
+                <label class="layui-form-label" style="width: 100px" >收件人电话</label>
+                <div class="layui-input-block">
+                    <input type="text" name="receivePhone" required style="width: 240px"  lay-verify="required" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item center" >
+                <label class="layui-form-label" style="width: 100px" >收件人地址</label>
+                <div class="layui-input-block">
+                    <input type="text" name="address" required style="width: 240px"  lay-verify="required" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit lay-filter="buy" >点击支付</button>
+                </div>
+            </div>
+        </form>
+    </div>
     <div class="test">
         <div class="container">
             <div class="row">
@@ -84,8 +118,8 @@
                         </div>
                         <div class="ps-product__image layer-photos-demo" id="layer-photos-demo">
                             <img th:src="${gddetail.image}" th:layer-src="${gddetail.image}" style="width:500px;height:500px;cursor: pointer;">
-                            <img th:each="imgs:${gddetail.otherimg}" th:src="${imgs}"
-                                 th:layer-src="${imgs}" style="width:500px;height:500px;cursor: pointer;">
+<!--                            <img th:each="imgs:${gddetail.otherimg}" th:src="${imgs}"-->
+<!--                                 th:layer-src="${imgs}" style="width:500px;height:500px;cursor: pointer;">-->
                         </div>
                     </div>
                     <div class="ps-product__info">
@@ -112,28 +146,21 @@
                                     style="background-color:#27B574">浏&nbsp;览</button>&nbsp;&nbsp;<span th:text="${gddetail.rednumber}"></span>
                         </h4>
                         <div class="ps-product__shopping">
-                            <a class="ps-btn mb-10" style="cursor: pointer"
-                               th:onclick="|ganxingqu()|">感兴趣<i class="ps-icon-next"></i></a>
-                            <div class="ps-product__actions" id="shoucang"><!--点击收藏-->
-                                <a class="mr-10" onclick="dianjicllect(1)" style="cursor: pointer"><i class="ps-icon-heart"></i></a>
+                            <div id="shoucang">
+                                <a class="ps-btn mb-10" onclick="addCart()" style="cursor: pointer">加入购物车
+                                </a>
                             </div>
-                            <div class="ps-product__actions" id="quxiaoshoucang" style="cursor: pointer"><!--点击取消收藏-->
-                                <a class="mr-10" onclick="dianjicllect(2)"
-                                style="background-color: #3AB87E"><i class="ps-icon-heart"></i></a>
+                        </div>
+                        <div class="ps-product__shopping">
+                            <div id="buy">
+                                <a class="ps-btn mb-10" onclick="buy()" style="cursor: pointer">我要购买
+                                </a>
                             </div>
-                            <script>
-                                if(collectstatus===2){
-                                    $("#shoucang").show();
-                                    $("#quxiaoshoucang").hide();
-                                }else {
-                                    $("#quxiaoshoucang").show();
-                                    $("#shoucang").hide();
-                                }
-                            </script>
                         </div>
                     </div>
                     <div class="clearfix"></div>
                 </div>
+
                 <div class="ps-product__content" style="margin-top:0px">
                     <ul class="tab-list" role="tablist">
                         <li class="active"><a href="#tab_01" aria-controls="tab_01" role="tab" data-toggle="tab">详情</a></li>

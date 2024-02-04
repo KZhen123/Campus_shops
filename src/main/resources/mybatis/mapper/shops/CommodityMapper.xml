@@ -65,7 +65,7 @@
     </select>
     <!-- 分页展示各类状态的商品信息 -->
     <select id="queryAllCommodity" resultType="com.entity.Commodity">
-        select commid,commname,commdesc,updatetime,category,commstatus
+        select commid,commname,commdesc,commstatus,createtime,updatetime,category,commstatus
         from commodity
         <where>
             <if test="commstatus != null">and commstatus = #{commstatus}</if>
@@ -80,16 +80,6 @@
             <if test="commstatus != null">and commstatus = #{commstatus}</if>
             <if test="userid != null">and userid = #{userid}</if>
         </where>
-    </select>
-    <!-- 首页分类展示8条商品 -->
-    <select id="queryCommodityByCategory" resultType="com.entity.Commodity">
-        select commid,commname,commdesc,orimoney,thinkmoney,school,updatetime,image
-        from commodity
-        <where>
-            <if test="category != 0">and category = #{category}</if>
-            and commstatus=1
-        </where>
-            order by updatetime desc limit 0,8
     </select>
     <!-- 查询产品清单分类分页展示商品的总数 -->
     <select id="queryAllCommodityByCategoryCount" resultType="java.lang.Integer">
@@ -116,5 +106,9 @@
         <if test="sortId==3">order by rednumber asc</if>
         <if test="sortId==4">order by rednumber desc</if>
         limit #{page},#{count}
+    </select>
+    <select id="selectAll" resultType="com.entity.Commodity">
+        select commid,commname,commdesc,orimoney,thinkmoney,school,updatetime,image
+        from commodity
     </select>
 </mapper>

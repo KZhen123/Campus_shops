@@ -140,64 +140,69 @@ layui.use(['form', 'util','layer','carousel'], function () {
         });
         return false;
     });
-});
-function ganxingqu() {
-    if(userid==null){
-        layer.msg("请登录", {
-            time: 1000,
-            icon: 2,
-            offset: '300px'
-        });
-    }else{
-        $.ajax({
-            url: basePath + "/addfrend/"+gooduser,
-            data: "",
+
+    // 提交按钮点击事件监听
+    form.on('submit(buy)', function (data) {
+        // 在这里处理表单提交逻辑
+        // data.field 包含表单中的所有字段值
+        console.log(data.field);
+        // 将表单数据转换为 JSON 字符串
+        var jsonData = JSON.stringify(data.field);
+         $.ajax({
+             url: basePath + "/order/create",
+             type: 'POST',
             contentType: "application/json;charset=UTF-8", //发送数据的格式
-            type: "put",
-            dataType: "json", //回调
-            beforeSend: function () {
-                layer.load(1, { //icon支持传入0-2
-                    content: '请稍等',
-                    success: function (layero) {
-                        layero.find('.layui-layer-content').css({
-                            'padding-top': '39px',
-                            'width': '60px'
-                        });
-                    }
-                });
-            },
-            complete: function () {
-                layer.closeAll('loading');
-            },
-            success: function (data) {
+             data: jsonData,
+             success: function (data) {
                 if (data.status == 200) {
                     layer.msg(data.message, {
-                        time: 2000,
+                        time: 1000,
                         icon: 1,
-                        offset: '150px'
-                    }, function () {
-                        window.open(basePath + "/user/center")
+                        offset: '100px'
                     });
                 }else {
                     layer.msg(data.message, {
-                        time: 2000,
-                        icon: 2,
+                        time: 1000,
+                        icon: 5,
                         offset: '100px'
                     });
                 }
-            },error:function () {
-                layer.msg("系统错误", {
-                    time: 1000,
-                    icon: 2,
-                    offset: '100px'
-                });
-            }
+             },
+             error: function (err) {
+                 // 处理失败的回调
+                 layer.msg("系统错误", {
+                     time: 1000,
+                     icon: 2,
+                     offset: '100px'
+                 });
+             }
+         });
+
+        // 阻止表单跳转
+        return false;
+    });
+});
+
+function buy(){
+    layui.use('layer', function () {
+            var layer = layui.layer;
+
+            // 打开弹窗
+            layer.open({
+                type: 1,
+                title: '收件信息',
+                area: ['400px', '300px'],
+                content: $('#add-main'),
+                success: function (layero, index) {
+                    // 弹窗弹出后的回调
+                    layui.form.render(); // 重新渲染表单，确保表单元素正常显示
+                }
+            });
         });
-    }
 }
-function dianjicllect(colloperates) {
+
+function addCart() {
     var object = new Object();
-    object["colloperate"] = colloperates;
     object["commid"] = goodsid;
     object["cmuserid"] = gooduser;
     object["commname"] = $("#commname").text();
@@ -232,14 +237,6 @@ function dianjicllect(colloperates) {
                     icon: 1,
                     offset: '100px'
                 });
-                //改变按钮颜色
-                if(colloperates===2){
-                    $("#shoucang").show();
-                    $("#quxiaoshoucang").hide();
-                }else {
-                    $("#quxiaoshoucang").show();
-                    $("#shoucang").hide();
-                }
             }else {
                 layer.msg(data.message, {
                     time: 1000,

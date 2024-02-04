@@ -103,10 +103,10 @@
         <p class="ps-service"><i class="ps-icon-delivery"></i>环保公益两不误，与你相约在校园二手商城。</p>
     </div>
 </div>
-<div class="layui-carousel" id="test10">
+<div class="layui-carousel" id="test10" style="width:100%;height: 300px">
     <div carousel-item="">
-        <div><img th:src="@{/static/images/slider/3.jpg}" style="width:100%;height: 100%;"></div>
-        <div><img th:src="@{/static/images/slider/2.jpg}" style="width:100%;height: 100%;"></div>
+        <div><img th:src="@{/static/images/slider/3.jpg}" style="width:80%;height: 100%;margin: 0 auto;display: block;"></div>
+        <div><img th:src="@{/static/images/slider/2.jpg}" style="width:80%;height: 100%;margin: 0 auto;display: block;"></div>
     </div>
 </div>
 <main class="ps-main" id="indexssss">
@@ -236,7 +236,7 @@
         carousel.render({
             elem: '#test10'
             , width: '100%'
-            , height: '815px'
+            , height: '300px'
             ,interval: 5000
         });
     });
@@ -245,5 +245,6 @@
         location.href = basePath + "/login";
     }
 </script>
+
 </body>
 </html>

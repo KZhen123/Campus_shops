@@ -77,20 +77,7 @@ public class UserInfo implements Serializable {
      */
 	private Date createtime;
     /**
-     * 验证码
-     */
-	private String vercode;
-    /**
-     * 在线状态
-     */
-    private String status;//在线状态 online：在线、hide：隐身
-
-    //补充的属性
-    private String id; //我的ID
-    private String sign; //我的签名
-    private String avatar;//我的头像
-    private String content;   //聊天内容
-    private String type; //消息类型
-    private String toid; //聊天窗口的选中的用户或者群组的id
-    private Date sendtime;  //消息发送时间
+     * 签名
+     * */
+    private String sign;
 }
