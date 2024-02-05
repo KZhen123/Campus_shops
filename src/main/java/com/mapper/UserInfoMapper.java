@@ -15,7 +15,7 @@ import java.util.List;
  */
 public interface UserInfoMapper {
     /**查询用户信息*/
-    UserInfo LookUserinfo(String userid);
+    UserInfo lookUserinfo(String userid);
     /**分页查询不同角色用户信息*/
     List<UserInfo> queryAllUserInfo(@Param("page") Integer page, @Param("count") Integer count, @Param("roleid") Integer roleid, @Param("userstatus") Integer userstatus);
     /**查看不同角色用户总数*/
@@ -23,7 +23,7 @@ public interface UserInfoMapper {
     /**添加用户信息*/
     Integer userReg(UserInfo userInfo);
     /**修改用户信息*/
-    Integer UpdateUserInfo(UserInfo userInfo);
+    Integer updateUserInfo(UserInfo userInfo);
     /**查询用户的昵称和头像**/
     UserInfo queryPartInfo(String userid);
 }

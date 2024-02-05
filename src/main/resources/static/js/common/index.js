@@ -50,12 +50,9 @@ layui.use(['form', 'slider'], function () {
               $("#category").empty();
               $.each(data, function(i, cate) {
                     $("#category").append("<option selected th:title='"+cate.id+"'>"+cate.name+"</option>");
-                    console.log(cate.name);
               })
-              console.log("渲染开始");
               //更新渲染下拉框
               form.render();
-              console.log("渲染结束");
         }
     });
 });

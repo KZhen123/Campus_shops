@@ -1,5 +1,6 @@
 package com.entity;
 
+import jnr.ffi.annotations.In;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -76,8 +77,9 @@ public class UserInfo implements Serializable {
      * 注册时间
      */
 	private Date createtime;
+
     /**
-     * 签名
+     * 可持续化积分
      * */
-    private String sign;
+    private Integer point;
 }

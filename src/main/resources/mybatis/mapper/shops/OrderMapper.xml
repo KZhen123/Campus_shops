@@ -78,5 +78,20 @@
             and sellerId = #{sellerId}
         </if>
     </select>
+    <select id="getPie" resultType="com.entity.chart.OrderPie">
+        select c2.name,count(*) as value
+        from `order` o
+        left join commodity c1 on o.commodityId = c1.commid
+        left join category c2 on c1.category = c2.id
+        group by c2.id
+    </select>
+    <select id="getOrderByGender" resultType="map">
+        SELECT MONTH(time) AS order_month, COUNT(*) AS total_orders
+        FROM `order` o
+        left join user_info u on o.buyerId = u.userid
+        where u.sex = #{gender}
+        GROUP BY order_month;
+    </select>
+
 
 </mapper>

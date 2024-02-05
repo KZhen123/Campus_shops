@@ -37,6 +37,10 @@ public interface CommodityMapper {
 
     List<Commodity> queryAllCommodityByCategorySorted(@Param("page") Integer page, @Param("count") Integer count,
                                                       @Param("category") Integer category, @Param("minmoney") BigDecimal minmoney, @Param("maxmoney") BigDecimal maxmoney,
-                                                      @Param("sortId") Integer sortId, @Param("commname") String commname);
+                                                      @Param("sortId") Integer sortId, @Param("commname") String commname,@Param("userId") String userId);
     List<Commodity> selectAll();
+
+    List<Commodity> queryAllCommodityByCategorySorted2(@Param("page") Integer page, @Param("count") Integer count,
+                                                       @Param("category") Integer category, @Param("minmoney") BigDecimal minmoney, @Param("maxmoney") BigDecimal maxmoney,
+                                                       @Param("sortId") Integer sortId, @Param("commname") String commname);
 }

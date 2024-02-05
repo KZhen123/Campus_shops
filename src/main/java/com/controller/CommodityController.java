@@ -46,6 +46,9 @@ public class CommodityController {
     @Autowired
     private NoticesService noticesService;
 
+    @Autowired
+    private ClickService clickService;
+
     /**
      * 跳转到发布商品
      */
@@ -204,6 +207,7 @@ public class CommodityController {
             commodity.setOtherimg(commimagesService.LookGoodImages(commid));
             /**商品浏览量+1*/
             commodityService.ChangeCommodity(new Commodity().setCommid(commid).setRednumber(1));
+            clickService.updateNum(couserid,commodity.getCategory());
             modelMap.put("userinfo",userInfoService.queryPartInfo(commodity.getUserid()));
             modelMap.put("gddetail",commodity);
             return "/common/product-detail";
@@ -244,43 +248,10 @@ public class CommodityController {
         }
     }
 
-//    /**
-//     * 首页分类展示商品 --> 按照分类查询商品
-//     * 前端传入商品类别（category）
-//     * */
-//    @ResponseBody
-//    @GetMapping("/index/product/{category}")
-//    public ResultVo indexCommodity(@PathVariable("category") String category) {
-//        List<Commodity> commodityList = commodityService.queryCommodityByCategory(category);
-//        for (Commodity commodity : commodityList) {
-//            /**查询商品对应的其它图片*/
-//            List<String> imagesList = commimagesService.LookGoodImages(commodity.getCommid());
-//            commodity.setOtherimg(imagesList);
-//        }
-//            return new ResultVo(true,StatusCode.OK,"查询成功",commodityList);
-//    }
-
-//    /**
-//     * 查询最新发布的8条商品
-//     * */
-//    @ResponseBody
-//    @GetMapping("/product/latest")
-//    public ResultVo latestCommodity() {
-//        String category = "全部";
-//        List<Commodity> commodityList = commodityService.queryCommodityByCategory(category);
-//        for (Commodity commodity : commodityList) {
-//            /**查询商品对应的其它图片*/
-//            List<String> imagesList = commimagesService.LookGoodImages(commodity.getCommid());
-//            commodity.setOtherimg(imagesList);
-//        }
-//        return new ResultVo(true,StatusCode.OK,"查询成功",commodityList);
-//    }
-
     /**
      * 产品清单分页数据
      * 前端传入商品类别（category）、区域（area）
      * 最低价（minmoney）、最高价（maxmoney）
-     * 后端根据session查出个人本校信息（school）
      * */
     @GetMapping("/list-number/{category}/{minmoney}/{maxmoney}/{name}")
     @ResponseBody
@@ -293,7 +264,7 @@ public class CommodityController {
     }
 
     /**
-     * 产品清单界面
+     * 产品清单界面-按类别点击率排序
      * 前端传入商品类别（category）、当前页码（nowPaging）、name
      * 最低价（minmoney）、最高价（maxmoney）、价格升序降序（price：0.不排序 1.升序 2.降序）、点击率升序降序（3：升序 4：降序）
      * 后端根据session查出个人本校信息（school）
@@ -303,7 +274,14 @@ public class CommodityController {
     public ResultVo productlisting(@PathVariable("category") Integer category, @PathVariable("nowPaging") Integer page,
                                   @PathVariable("minmoney") BigDecimal minmoney, @PathVariable("maxmoney") BigDecimal maxmoney,
                                  @PathVariable("sortId") Integer sortId,@PathVariable("name") String name, HttpSession session) {
-        List<Commodity> commodityList = commodityService.queryAllCommodityByCategory((page - 1) * 16, 16, category, minmoney, maxmoney,sortId,name);
+        // 已登录
+        String userId = (String) session.getAttribute("userid");
+        List<Commodity> commodityList;
+        if(userId!=null){
+            commodityList = commodityService.queryAllCommodityByCategory((page - 1) * 16, 16, category, minmoney, maxmoney,sortId,name,userId);
+        }else{
+            commodityList = commodityService.queryAllCommodityByCategory((page - 1) * 16, 16, category, minmoney, maxmoney,sortId,name);
+        }
         for (Commodity commodity : commodityList) {
             /**查询商品对应的其它图片*/
             List<String> imagesList = commimagesService.LookGoodImages(commodity.getCommid());

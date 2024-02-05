@@ -3,7 +3,7 @@
 <mapper namespace="com.mapper.UserInfoMapper">
 
     <!--  查询用户信息-->
-    <select id="LookUserinfo" resultType="com.entity.UserInfo" parameterType="java.lang.String">
+    <select id="lookUserinfo" resultType="com.entity.UserInfo" parameterType="java.lang.String">
         select * from user_info where userid=#{userid}
     </select>
     <!-- 查询所有用户信息 -->
@@ -21,11 +21,11 @@
     </select>
     <!-- 添加用户信息 -->
     <insert id="userReg" parameterType="com.entity.UserInfo">
-        insert into user_info (userid,username,password,mobilephone,email,uimage,sign)
-        values (#{userid},#{username},#{password},#{mobilephone},#{email},#{uimage},#{sign})
+        insert into user_info (userid,username,password,mobilephone,email,uimage, point)
+        values (#{userid},#{username},#{password},#{mobilephone},#{email},#{uimage}, #{point})
     </insert>
     <!-- 修改用户信息 -->
-    <update id="UpdateUserInfo" parameterType="com.entity.UserInfo">
+    <update id="updateUserInfo" parameterType="com.entity.UserInfo">
         update user_info
         <set>
             <if test="username != null">username=#{username},</if>

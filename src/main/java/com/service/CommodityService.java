@@ -2,8 +2,10 @@ package com.service;
 
 import com.entity.Category;
 import com.entity.Commodity;
+import com.entity.UserInfo;
 import com.mapper.CategoryMapper;
 import com.mapper.CommodityMapper;
+import com.mapper.UserInfoMapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -32,14 +34,25 @@ public class CommodityService {
     @Autowired
     private CategoryMapper categoryMapper;
 
+    @Autowired
+    private UserInfoMapper userInfoMapper;
+
     /**插入商品*/
     @Async
     public Integer InsertCommodity(Commodity commodity){
         return commodityMapper.InsertCommodity(commodity);
     }
-    /**查询商品详情*/
+    /**
+     * 查询商品详情
+     * 查询卖家积分
+     * */
     public Commodity LookCommodity(Commodity commodity){
-        return commodityMapper.LookCommodity(commodity);
+        Commodity commodity1 = commodityMapper.LookCommodity(commodity);
+        String userid = commodity1.getUserid();
+        UserInfo userInfo = userInfoMapper.lookUserinfo(userid);
+       commodity1.setPoint(userInfo.getPoint());
+       return commodity1;
+
     }
     /**修改商品*/
     public Integer ChangeCommodity(Commodity commodity){
@@ -75,9 +88,17 @@ public class CommodityService {
         return commodityMapper.queryCommodityCount(userid,commstatus);
     }
 
-    /**产品清单分类分页展示商品-排序*/
+    /**产品清单分类分页展示商品-排序
+     * -按类别点击率排序
+     * */
+    public List<Commodity> queryAllCommodityByCategory(Integer page,Integer count,Integer category,BigDecimal minmoney,BigDecimal maxmoney,Integer sortId,String commname,String userId){
+        return commodityMapper.queryAllCommodityByCategorySorted(page,count,category,minmoney,maxmoney,sortId,commname,userId);
+    }
+
+    /**产品清单分类分页展示商品-排序
+     * */
     public List<Commodity> queryAllCommodityByCategory(Integer page,Integer count,Integer category,BigDecimal minmoney,BigDecimal maxmoney,Integer sortId,String commname){
-        return commodityMapper.queryAllCommodityByCategorySorted(page,count,category,minmoney,maxmoney,sortId,commname);
+        return commodityMapper.queryAllCommodityByCategorySorted2(page,count,category,minmoney,maxmoney,sortId,commname);
     }
     /**查询产品清单分类分页展示商品的总数*/
     public Integer queryAllCommodityByCategoryCount(Integer category, BigDecimal minmoney, BigDecimal maxmoney,String commname){

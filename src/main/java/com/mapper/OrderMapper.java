@@ -1,9 +1,11 @@
 package com.mapper;
 
 import com.entity.Order;
+import com.entity.chart.OrderPie;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 public interface OrderMapper {
 
@@ -22,4 +24,8 @@ public interface OrderMapper {
      * 查找总数
      * */
     Long getCount(@Param("buyerId") String buyerId, @Param("sellerId")String sellerId);
+
+    List<OrderPie> getPie();
+
+    List<Map<String, Object>> getOrderByGender(@Param("gender") String gender);
 }

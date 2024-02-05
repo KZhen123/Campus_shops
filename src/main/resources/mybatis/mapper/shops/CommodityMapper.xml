@@ -94,6 +94,26 @@
     </select>
     <select id="queryAllCommodityByCategorySorted" resultType="com.entity.Commodity">
         select commid,commname,orimoney,thinkmoney,school,updatetime,image
+        from commodity left join click on commodity.category=click.categoryId and click.userId = #{userId}
+        <where>
+            <if test="category != 0">and category = #{category}</if>
+            <if test="(minmoney != null) and (maxmoney != null)">and thinkmoney between #{minmoney} and #{maxmoney}</if>
+            and commstatus=1
+            <if test="commname != 'null'">and commname like concat ('%',#{commname},'%')</if>
+        </where>
+        <if test="sortId==1">order by thinkmoney asc</if>
+        <if test="sortId==2">order by thinkmoney desc</if>
+        <if test="sortId==3">order by rednumber asc</if>
+        <if test="sortId==4">order by rednumber desc</if>
+        <if test="sortId==0">order by click.num desc</if>
+        limit #{page},#{count}
+    </select>
+    <select id="selectAll" resultType="com.entity.Commodity">
+        select commid,commname,commdesc,orimoney,thinkmoney,school,updatetime,image
+        from commodity
+    </select>
+    <select id="queryAllCommodityByCategorySorted2" resultType="com.entity.Commodity">
+        select commid,commname,orimoney,thinkmoney,school,updatetime,image
         from commodity
         <where>
             <if test="category != 0">and category = #{category}</if>
@@ -106,9 +126,5 @@
         <if test="sortId==3">order by rednumber asc</if>
         <if test="sortId==4">order by rednumber desc</if>
         limit #{page},#{count}
-    </select>
-    <select id="selectAll" resultType="com.entity.Commodity">
-        select commid,commname,commdesc,orimoney,thinkmoney,school,updatetime,image
-        from commodity
     </select>
 </mapper>

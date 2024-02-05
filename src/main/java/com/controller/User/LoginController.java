@@ -94,8 +94,8 @@ public class LoginController {
         String userid = KeyUtil.genUniqueKey();
         login.setId(KeyUtil.genUniqueKey()).setUserid(userid).setMobilephone(mobilephone).setPassword(passwords);
         Integer integer = loginService.loginAdd(login);
-        //新注册用户存入默认头像、存入默认签名
-        userInfo.setUserid(userid).setPassword(passwords).setUimage("/pic/8c42362f920c45948255768d494d48ee.jpg");
+        //新注册用户存入默认头像
+        userInfo.setUserid(userid).setPassword(passwords).setUimage("/pic/8c42362f920c45948255768d494d48ee.jpg").setPoint(0);
         Integer integer1 = userInfoService.userReg(userInfo);
         if (integer == 1 && integer1 == 1) {
             /**注册成功后存入session*/

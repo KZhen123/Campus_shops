@@ -93,4 +93,9 @@ public class Commodity implements Serializable {
      * */
     private String categoryName;
 
+    /**
+     * 卖家积分
+     * */
+    private Integer point;
+
 }

@@ -2,7 +2,6 @@ package com.service;
 
 import com.entity.UserInfo;
 import com.mapper.UserInfoMapper;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,7 +24,7 @@ public class UserInfoService {
 
     /**查询用户信息*/
     public UserInfo LookUserinfo(String userid) {
-        return userInfoMapper.LookUserinfo(userid);
+        return userInfoMapper.lookUserinfo(userid);
     }
     /**分页查询不同角色用户信息*/
     public List<UserInfo> queryAllUserInfo(Integer page,Integer count,Integer roleid,Integer userstatus){
@@ -41,10 +40,21 @@ public class UserInfoService {
     }
     /**修改用户信息*/
     public Integer UpdateUserInfo(UserInfo userInfo){
-        return userInfoMapper.UpdateUserInfo(userInfo);
+        return userInfoMapper.updateUserInfo(userInfo);
     }
     /**查询用户的昵称和头像**/
     public UserInfo queryPartInfo(String userid){
         return userInfoMapper.queryPartInfo(userid);
+    }
+
+    /**
+     * 1. 获得现有积分
+     * 2. 增加积分
+     * */
+    public Integer updatePoint(String userId) {
+        UserInfo userInfo = userInfoMapper.lookUserinfo(userId);
+        userInfo.setPoint(userInfo.getPoint()+1);
+        Integer integer = userInfoMapper.updateUserInfo(userInfo);
+        return integer;
     }
 }

@@ -141,12 +141,4 @@ public class IndexController {
         return "/user/order/buyRecord";
     }
 
-    /**
-     * 销量列表
-     * */
-    @GetMapping("/admin/sold")
-    public String adminSold(){
-        return "/admin/sold/soldrecord";
-    }
-
 }
