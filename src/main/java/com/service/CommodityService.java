@@ -104,4 +104,5 @@ public class CommodityService {
     public Integer queryAllCommodityByCategoryCount(Integer category, BigDecimal minmoney, BigDecimal maxmoney,String commname){
         return commodityMapper.queryAllCommodityByCategoryCount(category,minmoney,maxmoney,commname);
     }
+
 }

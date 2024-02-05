@@ -14,6 +14,40 @@
     </script>
 </head>
 <body style="margin:10px;background-color: white">
+<!--弹窗-->
+<div id="add-main" style="display: none;">
+    <form class="layui-form" id="add-form"  action="" lay-filter="layui-edit-form">
+        <!-- 隐藏字段，用于携带页面信息 -->
+        <input type="hidden" name="commodityName">
+        <input type="hidden" name="commodityDesc">
+        <input type="hidden" name="commodityId">
+        <input type="hidden" name="userId">
+
+        <div class="layui-form-item center" >
+            <label class="layui-form-label" style="width: 100px" >捐赠人姓名</label>
+            <div class="layui-input-block">
+                <input type="text" name="receiveName" required style="width: 240px"  lay-verify="required" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item center" >
+            <label class="layui-form-label" style="width: 100px" >捐赠人电话</label>
+            <div class="layui-input-block">
+                <input type="text" name="phone" required style="width: 240px"  lay-verify="required" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item center" >
+            <label class="layui-form-label" style="width: 100px" >回收地址</label>
+            <div class="layui-input-block">
+                <input type="text" name="address" required style="width: 240px"  lay-verify="required" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="donate" >确认捐赠</button>
+            </div>
+        </div>
+    </form>
+</div>
 <div class="wrapper wrapper-content">
     <div class="row">
         <div class="col-sm-12">
@@ -27,6 +61,7 @@
                             <option th:title="1">正常</option>
                             <option th:title="0">违规</option>
                             <option th:title="4">已售出</option>
+                            <option th:title="5">已捐赠</option>
                         </select>
                     </div>
                 </div>
@@ -38,6 +73,10 @@
                     {{# if(d.commstatus!=3){ }}
                         {{# if(d.commstatus!=4){ }}
                         <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="bianji">编辑</a>
+
+                        {{# if(d.commstatus!=5){ }}
+                            <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="donate">捐赠</a>
+                        {{# } }}
                         {{# } }}
                     {{# } }}
                     <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="shanchu">删除</a>

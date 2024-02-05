@@ -141,4 +141,12 @@ public class IndexController {
         return "/user/order/buyRecord";
     }
 
+    /**
+     * 用户捐赠记录
+     * */
+    @GetMapping("/user/donate")
+    public String donate(){
+        return "/user/donate/list";
+    }
+
 }

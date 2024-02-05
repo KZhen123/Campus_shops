@@ -226,6 +226,15 @@ public class AdminController {
         return "/admin/comment/replyList";
     }
 
+
+    /**
+     * 用户捐赠记录
+     * */
+    @GetMapping("/admin/donate")
+    public String donate(){
+        return "/admin/donate/list";
+    }
+
     /**
      * 分页管理员查看各类商品信息
      *前端传入页码、分页数量

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.DonateMapper">
+    <resultMap id="BaseResultMap" type="com.entity.Donate">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="commodityId" property="commodityId" jdbcType="VARCHAR" />
+        <result column="commodityName" property="commodityName" jdbcType="VARCHAR" />
+        <result column="commodityDesc" property="commodityDesc" jdbcType="VARCHAR" />
+        <result column="userId" property="userId" jdbcType="VARCHAR" />
+        <result column="phone" property="phone" jdbcType="VARCHAR" />
+        <result column="donateTime" property="donateTime" jdbcType="TIMESTAMP" />
+        <result column="address" property="address" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        id,
+        commodityId,
+        commodityName,
+        commodityDesc,
+        userId,
+        receiveName,
+        phone,
+        donateTime,
+        address
+    </sql>
+    <insert id="insert" parameterType="com.entity.Category">
+        insert into donate (id,
+        commodityId,
+        commodityName,
+        commodityDesc,
+        userId,
+        receiveName,
+        phone,
+        address)
+        values (#{id,jdbcType=INTEGER},
+        #{commodityId,jdbcType=VARCHAR},
+        #{commodityName,jdbcType=VARCHAR},
+        #{commodityDesc,jdbcType=VARCHAR},
+        #{userId,jdbcType=VARCHAR},
+        #{receiveName,jdbcType=VARCHAR},
+        #{phone,jdbcType=VARCHAR},
+        #{address,jdbcType=VARCHAR})
+    </insert>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from donate
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from donate
+    </select>
+    <select id="queryPageList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from donate
+        where userId = #{userId}
+        limit #{begin}, #{size}
+    </select>
+    <select id="getCount" resultType="java.lang.Long">
+        select
+        count(1)
+        from donate
+        where userId = #{userId}
+    </select>
+    <select id="queryAllPageList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from donate
+        limit #{begin}, #{size}
+    </select>
+    <select id="getAllCount" resultType="java.lang.Long">
+        select
+        count(1)
+        from donate
+    </select>
+
+</mapper>
