@@ -30,12 +30,6 @@ var app = new Vue({
         },getmainimgurl: function () {
             var that = this;
             return that.mainimg;
-        },setvideourl: function (videosrc) {
-            var that = this;
-            that.videourl = videosrc;
-        },getvideourl: function () {
-            var that = this;
-            return that.videourl;
         },delimage: function (ids) {
             var that = this;
             that.listimages.splice(ids, 1);//从数组中删除此图
@@ -112,7 +106,7 @@ layui.use(['form', 'upload', 'element'], function () {
     });
     upload.render({
         elem: '#test2'
-        , url: basePath + '/relgoods/video'
+        , url: basePath + '/relgoods/pic'
         , accept: 'images' //图片
         , size: 1024 * 20
         , exts: 'png|jpg'
@@ -149,7 +143,6 @@ layui.use(['form', 'upload', 'element'], function () {
     });
 
     form.on('submit(demo1)', function (data) {
-        var vuevideo=getvideourl();
         var vuemainimg=getmainimgurl();
         var vuelistimages=getlistimages();
         if(vuemainimg.length===0){
@@ -240,7 +233,6 @@ layui.use(['form', 'upload', 'element'], function () {
               $("#category").empty();
               $.each(data, function(i, cate) {
                     $("#category").append("<option selected value='"+cate.id+"'>"+cate.name+"</option>");
-                    console.log(cate.name);
               })
               //更新渲染下拉框
               form.render();

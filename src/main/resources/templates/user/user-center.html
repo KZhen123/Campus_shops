@@ -39,7 +39,7 @@
             </ul>
             <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right">
                 <li class="layui-nav-item" lay-unselect>
-                    <a style="cursor: pointer" onclick="alertmessage()" layadmin-event="message" lay-text="消息中心">
+                    <a style="cursor: pointer" layadmin-event="message" lay-text="消息中心">
                         <i class="layui-icon layui-icon-notice"></i>
                         <!-- 如果有新消息，则显示小圆点 -->
                         <span class="layui-badge-dot" id="reddot" style="display: none"></span>
@@ -224,17 +224,7 @@
     }).extend({
         index: 'lib/index' //主入口模块
     }).use('index');
-    function alertmessage() {
-        layer.open({
-            type: 2,
-            title: '最新通知',
-            shadeClose: true,
-            shade: 0.8,
-            maxmin: true,
-            area: ['50%', '60%'],
-            content: basePath+'/user/alertmessage'
-        });
-    }
+
     function justredspot() {
         $.ajax({
             url: basePath + "/notices/queryNotices",

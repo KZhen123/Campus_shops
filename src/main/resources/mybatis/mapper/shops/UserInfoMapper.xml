@@ -9,14 +9,14 @@
     <!-- 查询所有用户信息 -->
     <select id="queryAllUserInfo" resultType="com.entity.UserInfo">
         select u.userid, u.username,u.uimage,u.sex,u.mobilephone,u.email,u.school,u.faculty,u.userstatus,l.roleid
-        from user_info u,login l
+        from user_info u,user_role l
         where u.userid=l.userid and l.roleid=#{roleid} and u.userstatus=#{userstatus}
         order by u.createtime desc limit #{page},#{count}
     </select>
     <!--查看所有用户总数-->
     <select id="queryAllUserCount" resultType="java.lang.Integer">
         select count(*)
-        from user_info u,login l
+        from user_info u,user_role l
         where u.userid=l.userid and l.roleid=#{roleid}
     </select>
     <!-- 添加用户信息 -->

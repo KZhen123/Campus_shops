@@ -117,12 +117,6 @@ public class IndexController {
         return "/admin/echars/console";
     }
 
-
-    @GetMapping("/app/message/index")
-    public String appmessageindex(){
-        return "/admin/app/message/index";
-    }
-
     /**
      * 用户收藏列表
      * */

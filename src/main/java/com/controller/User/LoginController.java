@@ -95,15 +95,14 @@ public class LoginController {
         login.setId(KeyUtil.genUniqueKey()).setUserid(userid).setMobilephone(mobilephone).setPassword(passwords);
         Integer integer = loginService.loginAdd(login);
         //新注册用户存入默认头像、存入默认签名
-        userInfo.setUserid(userid).setPassword(passwords).setUimage("/pic/d1d66c3ea71044a9b938b00859ca94df.jpg").
-                setSign("新人报道，请多多关照");
+        userInfo.setUserid(userid).setPassword(passwords).setUimage("/pic/8c42362f920c45948255768d494d48ee.jpg");
         Integer integer1 = userInfoService.userReg(userInfo);
         if (integer == 1 && integer1 == 1) {
             /**注册成功后存入session*/
             session.setAttribute("userid", userid);
             session.setAttribute("username", username);
             /**存入用户角色信息*/
-            userRoleService.InsertUserRole(new UserRole().setUserid(userid).setRoleid(1).setIdentity("网站用户"));
+            userRoleService.InsertUserRole(new UserRole().setUserid(userid).setRoleid(1));
             UsernamePasswordToken token = new UsernamePasswordToken(mobilephone, new Md5Hash(password, "Campus-shops").toString());
             Subject subject = SecurityUtils.getSubject();
             subject.login(token);

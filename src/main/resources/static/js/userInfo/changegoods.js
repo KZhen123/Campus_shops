@@ -231,18 +231,23 @@ layui.use(['form', 'upload', 'element'], function () {
         return false;
     });
     // 渲染下拉框
-       $.ajax({
-           type: 'get',
-           url: basePath+'/category/all',
-           dataType: 'json',
-           success: function(data) {
-                 $("#category").empty();
-                 $.each(data, function(i, cate) {
-                       $("#category").append("<option selected value='"+cate.id+"'>"+cate.name+"</option>");
-                       console.log(cate.name);
-                 })
-                 //更新渲染下拉框
-                 form.render();
-           }
-       });
+    $.ajax({
+        type: 'get',
+        url: basePath + '/category/all',
+        dataType: 'json',
+        success: function (data) {
+            $("#category").empty();
+            $.each(data, function (i, cate) {
+                var option = "<option value='" + cate.id + "'";
+                if (cate.id === categoryId) {
+                    option += " selected";
+                }
+                option += ">" + cate.name + "</option>";
+
+                $("#category").append(option);
+            })
+            // 更新渲染下拉框
+            form.render();
+        }
+    });
 });

@@ -29,7 +29,7 @@ public class UserInfo implements Serializable {
      */
 	private String userid;
     /**
-     * 角色id 1普通用户 2管理员 3超级管理员
+     * 角色id 1普通用户 2管理员
      */
     private Integer roleid;
     /**

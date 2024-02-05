@@ -26,6 +26,7 @@
                             <option th:title="3">待审核</option>
                             <option th:title="1">正常</option>
                             <option th:title="0">违规</option>
+                            <option th:title="2">已删除</option>
                             <option th:title="4">已售出</option>
                         </select>
                     </div>
@@ -36,11 +37,13 @@
                 <script type="text/html" id="barDemo">
                     <a class="layui-btn layui-btn-xs" lay-event="xiangqing">详情</a>
                     {{# if(d.commstatus!=4){ }}
-                        {{# if(d.commstatus!=0){ }}
-                        <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="weigui">违规</a>
-                        {{# } }}
-                        {{# if(d.commstatus!=1){ }}
-                        <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="shenhe">通过审核</a>
+                        {{# if(d.commstatus!=2){ }}
+                            {{# if(d.commstatus!=0){ }}
+                            <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="weigui">违规</a>
+                            {{# } }}
+                            {{# if(d.commstatus!=1){ }}
+                            <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="shenhe">通过审核</a>
+                            {{# } }}
                         {{# } }}
                     {{# } }}
                 </script>

@@ -190,13 +190,13 @@ public class CommodityController {
         }else if (!StringUtils.isEmpty(couserid)){//如果用户已登录
             Login login = loginService.userLogin(new Login().setUserid(couserid));
             /**商品为违规状态时：本人和管理员可查看*/
-            if (commodity.getCommstatus().equals(0) && (commodity.getUserid().equals(couserid) || (login.getRoleid().equals(2) || login.getRoleid().equals(3)))){
+            if (commodity.getCommstatus().equals(0) && (commodity.getUserid().equals(couserid) || (login.getRoleid().equals(2)))){
                 i=1;
                 /**商品为待审核状态时：本人和管理员可查看*/
-            }else if (commodity.getCommstatus().equals(3) && (commodity.getUserid().equals(couserid) || (login.getRoleid().equals(2) || login.getRoleid().equals(3)))){
+            }else if (commodity.getCommstatus().equals(3) && (commodity.getUserid().equals(couserid) || (login.getRoleid().equals(2)))){
                 i=1;
                 /**商品为已售出状态时：本人和管理员可查看*/
-            }else if (commodity.getCommstatus().equals(4) && (commodity.getUserid().equals(couserid) || (login.getRoleid().equals(2) || login.getRoleid().equals(3)))){
+            }else if (commodity.getCommstatus().equals(4) && (commodity.getUserid().equals(couserid) || (login.getRoleid().equals(2)))){
                 i=1;
             }
         }
@@ -206,21 +206,6 @@ public class CommodityController {
             commodityService.ChangeCommodity(new Commodity().setCommid(commid).setRednumber(1));
             modelMap.put("userinfo",userInfoService.queryPartInfo(commodity.getUserid()));
             modelMap.put("gddetail",commodity);
-            //如果没有用户登录
-            if (StringUtils.isEmpty(couserid)){
-                modelMap.put("collectstatus",2);
-            }else {
-                Collect collect = collectService.queryCollectStatus(new Collect().setCommid(commid).setCouserid(couserid));
-                if(collect!=null){
-                    if (collect.getCollstatus() == 2){
-                        modelMap.put("collectstatus",2);
-                    }else {
-                        modelMap.put("collectstatus",1);
-                    }
-                }else {
-                    modelMap.put("collectstatus",2);
-                }
-            }
             return "/common/product-detail";
         }else{
             return "/error/404";

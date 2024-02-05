@@ -67,9 +67,8 @@ public class UserController {
             String passwords = new Md5Hash(newpwd, "Campus-shops").toString();
             login.setPassword(passwords);
             userInfo.setPassword(passwords).setUserid(login1.getUserid());
-            Integer integer = loginService.updateLogin(login);
-            Integer integer1 = userInfoService.UpdateUserInfo(userInfo);
-            if (integer == 1 && integer1 == 1) {
+            Integer integer = userInfoService.UpdateUserInfo(userInfo);
+            if (integer == 1) {
                 return new ResultVo(true, StatusCode.OK, "修改密码成功");
             }
             return new ResultVo(false, StatusCode.ERROR, "修改密码失败");

@@ -45,7 +45,7 @@ public class OrderController {
 
         ResultVo result;
         if (create == 1) {
-            result = new ResultVo(true, StatusCode.OK, "新增成功");
+            result = new ResultVo(true, StatusCode.OK, "购买成功！请至个人中心查看");
         } else {
             result = new ResultVo(false, StatusCode.SERVERERROR, "新增失败");
         }

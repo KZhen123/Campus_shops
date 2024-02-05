@@ -112,7 +112,6 @@ public class AdminController {
     /**
      * 管理员列表
      * */
-    @RequiresPermissions("admin:set")
     @GetMapping("/admin/adminlist")
     public String adminlist(){
         return "/admin/user/adminlist";
@@ -141,7 +140,7 @@ public class AdminController {
         if (roleid == 2){
             Integer i = loginService.updateLogin(new Login().setUserid(userid).setRoleid(roleid));
             if (i == 1){
-                userRoleService.UpdateUserRole(new UserRole().setUserid(userid).setRoleid(2).setIdentity("网站管理员"));
+                userRoleService.UpdateUserRole(new UserRole().setUserid(userid).setRoleid(2));
                 /**发出设置为管理员的系统通知*/
                 Notices notices = new Notices().setId(KeyUtil.genUniqueKey()).setUserid(userid).setTpname("系统通知")
                         .setWhys("恭喜您已被设置为网站管理员，努力维护网站的良好氛围。");
@@ -152,7 +151,7 @@ public class AdminController {
         }else if (roleid == 1){
             Integer i = loginService.updateLogin(new Login().setUserid(userid).setRoleid(roleid));
             if (i == 1){
-                userRoleService.UpdateUserRole(new UserRole().setUserid(userid).setRoleid(1).setIdentity("网站用户"));
+                userRoleService.UpdateUserRole(new UserRole().setUserid(userid).setRoleid(1));
                 /**发出设置为网站用户的系统通知*/
                 Notices notices = new Notices().setId(KeyUtil.genUniqueKey()).setUserid(userid).setTpname("系统通知")
                         .setWhys("您已被设置为网站用户，希望您再接再厉。");
@@ -172,9 +171,8 @@ public class AdminController {
     @ResponseBody
     public ResultVo adminuserlist(@PathVariable("userid") String userid,@PathVariable("userstatus") Integer userstatus) {
         if (userstatus == 0){
-            Integer i = loginService.updateLogin(new Login().setUserid(userid).setUserstatus(userstatus));
             Integer j = userInfoService.UpdateUserInfo(new UserInfo().setUserid(userid).setUserstatus(userstatus));
-            if (i ==1 && j == 1){
+            if (j == 1){
                 /**发出封号的系统通知*/
                 Notices notices = new Notices().setId(KeyUtil.genUniqueKey()).setUserid(userid).setTpname("系统通知")
                         .setWhys("因为您的不良行为，您在该网站的账号已被封号。");
@@ -183,9 +181,8 @@ public class AdminController {
             }
             return new ResultVo(true, StatusCode.ERROR, "封号失败");
         }else if (userstatus == 1){
-            Integer i = loginService.updateLogin(new Login().setUserid(userid).setUserstatus(userstatus));
             Integer j = userInfoService.UpdateUserInfo(new UserInfo().setUserid(userid).setUserstatus(userstatus));
-            if (i ==1 && j == 1){
+            if (j == 1){
                 /**发出解封的系统通知*/
                 Notices notices = new Notices().setId(KeyUtil.genUniqueKey()).setUserid(userid).setTpname("系统通知")
                         .setWhys("您在该网站的账号已被解封，希望您保持良好的行为。");

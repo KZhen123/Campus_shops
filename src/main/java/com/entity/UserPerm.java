@@ -24,7 +24,7 @@ public class UserPerm implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * 1普通用户 2管理员 3超级管理员
+     * 1普通用户 2管理员
      */
 	private Integer roleid;
     /**
