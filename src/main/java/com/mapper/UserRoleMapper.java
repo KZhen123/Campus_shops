@@ -7,8 +7,7 @@ import com.entity.UserRole;
  *  Mapper 接口
  * </p>
  *
- * @author hlt
- * @since 2019-12-21
+
  */
 public interface UserRoleMapper {
     /**插入角色*/

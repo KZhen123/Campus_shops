@@ -34,8 +34,7 @@ import java.util.concurrent.TimeUnit;
  * 个人中心 控制器
  * </p>
  *
- * @author hlt
- * @since 2019-12-21
+
  */
 @Controller
 public class UserController {

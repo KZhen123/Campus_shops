@@ -10,8 +10,7 @@ import java.util.List;
  *  评论回复 Mapper 接口
  * </p>
  *
- * @author hlt
- * @since 2019-12-21
+
  */
 public interface ReplyMapper {
     /**插入回复*/
